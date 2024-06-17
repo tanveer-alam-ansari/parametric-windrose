@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
-import epw as ep
+from epw_updated import epw
 from tempfile import NamedTemporaryFile
 
 st.set_page_config(page_title='Customizable Wind Rose Diagram', layout='wide')
@@ -22,7 +22,9 @@ def windrose_app():
         with open(local_file_path, "wb") as f:
             f.write(file.getbuffer())
         sidebar.success("EPW data acquired successfully")
-        epw_data=ep.epw()
+        sidebar.markdown("---")
+        sidebar.write("To reset filters and chart, click on 'x' above and reload the EPW file")
+        epw_data=epw()
         epw_data.read(local_file_path)
         df_epw = epw_data.dataframe
         os.remove(local_file_path)
